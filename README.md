@@ -2,9 +2,9 @@
 
 > A [Flarum](http://flarum.org) extension. Allow users to login with Minecraft.
 
-## Warning
+## Pictures
 
-Not yet published on packagist.
+[Imgur](https://imgur.com/a/UjBgv7U)
 
 ## Install
 

@@ -3,6 +3,7 @@
 namespace Nearata\AuthMinecraft;
 
 use Flarum\Extend;
+use Nearata\AuthMinecraft\Api\Controller\ChangeEmailController;
 use Nearata\AuthMinecraft\Api\Controller\MinecraftAuthController;
 
 return [
@@ -13,5 +14,6 @@ return [
     new Extend\Locales(__DIR__ . '/resources/locale'),
 
     (new Extend\Routes('api'))
-        ->post('/auth/minecraft', 'nearata.auth-minecraft', MinecraftAuthController::class)
+        ->post('/auth/minecraft', 'nearata-auth-minecraft.auth', MinecraftAuthController::class)
+        ->post('/minecraft/changeEmail', 'nearata-auth-minecraft.change_email', ChangeEmailController::class)
 ];

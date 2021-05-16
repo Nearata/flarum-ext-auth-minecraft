@@ -2,7 +2,9 @@ import app from 'flarum/app';
 import { extend } from 'flarum/common/extend';
 import Button from 'flarum/common/components/Button';
 import LogInButtons from 'flarum/forum/components/LogInButtons';
+import SettingsPage from 'flarum/forum/components/SettingsPage';
 
+import ChangeEmailModal from './components/ChangeEmailModal';
 import MinecraftLogInModal from './components/MinecraftLogInModal';
 
 app.initializers.add('nearata-auth-minecraft', () => {
@@ -14,5 +16,19 @@ app.initializers.add('nearata-auth-minecraft', () => {
                 onclick: () => app.modal.show(MinecraftLogInModal)
             }, app.translator.trans('nearata-auth-minecraft.forum.log_in_button_title'))
         )
+    });
+
+    extend(SettingsPage.prototype, 'accountItems', function (items) {
+        const user = this.user;
+
+        if (user.email().endsWith('auth-minecraft.net')) {
+            items.replace(
+                'changeEmail',
+                m(Button, {
+                    className: 'Button',
+                    onclick: () => app.modal.show(ChangeEmailModal, {user,})
+                }, app.translator.trans('nearata-auth-minecraft.forum.settings.change_email_button'))
+            )
+        }
     });
 });

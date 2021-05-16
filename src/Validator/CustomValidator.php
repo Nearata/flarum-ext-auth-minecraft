@@ -1,25 +1,23 @@
 <?php
 
-namespace Nearata\AuthMinecraft;
+namespace Nearata\AuthMinecraft\Validator;
 
 use Flarum\Foundation\AbstractValidator;
 
 class CustomValidator extends AbstractValidator
 {
+    protected $rules = [
+        'token' => [
+            'required',
+            'regex:/^[0-9]+$/i',
+            'min:6',
+            'max:6'
+        ]
+    ];
+
     protected function getRules()
     {
-        return [
-            'email' => [
-                'required',
-                'email:filter'
-            ],
-            'token' => [
-                'required',
-                'regex:/^[0-9]+$/i',
-                'min:6',
-                'max:6'
-            ]
-        ];
+        return $this->rules;
     }
 
     protected function getMessages()
