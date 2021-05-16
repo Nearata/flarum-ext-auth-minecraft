@@ -6,6 +6,10 @@
 
 [Imgur](https://imgur.com/a/UjBgv7U)
 
+## Note
+
+The user must have a purchased version of Minecraft.
+
 ## Install
 
 ```sh
