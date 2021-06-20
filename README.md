@@ -1,5 +1,7 @@
 # Minecraft Auth
 
+![supports](https://flarum-badge-api.davwheat.dev/v1/compat-latest/nearata/flarum-ext-auth-minecraft)
+
 > A [Flarum](http://flarum.org) extension. Allow users to login with Minecraft.
 
 ## Pictures
