@@ -11,19 +11,16 @@ use Nearata\AuthMinecraft\TokenHelper;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class MinecraftAuthController implements RequestHandlerInterface
 {
     protected $response;
     protected $validator;
-    protected $translator;
 
-    public function __construct(CustomResponseFactory $response, CustomValidator $validator, TranslatorInterface $translator)
+    public function __construct(CustomResponseFactory $response, CustomValidator $validator)
     {
         $this->response = $response;
         $this->validator = $validator;
-        $this->translator = $translator;
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface

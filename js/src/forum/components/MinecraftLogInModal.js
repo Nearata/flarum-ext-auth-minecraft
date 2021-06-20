@@ -80,7 +80,7 @@ export default class MinecraftLogInModal extends Modal {
 
     onerror(error) {
         if (error.status === 403) {
-            error.alert.content = app.translator.trans('nearata-auth-minecraft.api.error_403');
+            error.alert.content = trans('error_403');
         }
 
         super.onerror(error);

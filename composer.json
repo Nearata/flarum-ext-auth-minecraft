@@ -13,7 +13,7 @@
         "source": "https://github.com/Nearata/flarum-ext-auth-minecraft"
     },
     "require": {
-        "flarum/core": ">=0.1.0-beta.16 <=0.1.0",
+        "flarum/core": "^1.0.0",
         "guzzlehttp/guzzle": "^7.0",
         "illuminate/http": "^8.0"
     },

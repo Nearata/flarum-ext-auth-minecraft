@@ -3,7 +3,6 @@
 namespace Nearata\AuthMinecraft\Api\Controller;
 
 use Flarum\Api\Client;
-use Flarum\Api\Controller\SendConfirmationEmailController;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Laminas\Diactoros\Response\EmptyResponse;
@@ -16,12 +15,12 @@ use Psr\Http\Server\RequestHandlerInterface;
 class ChangeEmailController implements RequestHandlerInterface
 {
     protected $validator;
-    protected $apiClient;
+    protected $api;
 
-    public function __construct(ChangeEmailValidator $validator, Client $client)
+    public function __construct(ChangeEmailValidator $validator, Client $api)
     {
         $this->validator = $validator;
-        $this->apiClient = $client;
+        $this->api = $api;
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
@@ -63,7 +62,7 @@ class ChangeEmailController implements RequestHandlerInterface
         $actor->email = $email;
         $actor->save();
 
-        $response = $this->apiClient->send(SendConfirmationEmailController::class, $actor, ['id' => $actor->id]);
+        $response = $this->api->withParentRequest($request)->post("/users/$actor->id/send-confirmation");
 
         return new EmptyResponse(200);
     }
