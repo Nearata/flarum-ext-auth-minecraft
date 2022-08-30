@@ -7,20 +7,20 @@
         "oauth"
     ],
     "type": "flarum-extension",
-    "license": "MIT",
+    "license": "Unlicense",
     "support": {
         "issues": "https://github.com/Nearata/flarum-ext-auth-minecraft/issues",
         "source": "https://github.com/Nearata/flarum-ext-auth-minecraft"
     },
     "require": {
         "flarum/core": "^1.0.0",
-        "guzzlehttp/guzzle": "^7.0",
+        "guzzlehttp/guzzle": "^7.4",
         "illuminate/http": "^8.0"
     },
     "authors": [
         {
             "name": "Nearata",
-            "email": "williamdicicco@protonmail.com",
+            "email": "nearata@protonmail.com",
             "role": "Developer"
         }
     ],
