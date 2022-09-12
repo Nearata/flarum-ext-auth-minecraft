@@ -5,9 +5,8 @@ namespace Nearata\AuthMinecraft\Api\Controller;
 use Flarum\Forum\Auth\Registration;
 use Illuminate\Support\Arr;
 use Laminas\Diactoros\Response\EmptyResponse;
-use Nearata\AuthMinecraft\Validator\CustomValidator;
 use Nearata\AuthMinecraft\Forum\Auth\CustomResponseFactory;
-use Nearata\AuthMinecraft\TokenHelper;
+use Nearata\AuthMinecraft\Utils;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -15,22 +14,18 @@ use Psr\Http\Server\RequestHandlerInterface;
 class MinecraftAuthController implements RequestHandlerInterface
 {
     protected $response;
-    protected $validator;
 
-    public function __construct(CustomResponseFactory $response, CustomValidator $validator)
+    public function __construct(CustomResponseFactory $response)
     {
         $this->response = $response;
-        $this->validator = $validator;
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $body = $request->getParsedBody();
-        $token = Arr::get($body, 'token');
+        $ipAddress = Arr::get($request->getServerParams(), 'REMOTE_ADDR', '127.0.0.1');
 
-        $this->validator->assertValid(['token' => $token]);
+        $response = Utils::validate($ipAddress);
 
-        $response = TokenHelper::validate($token);
         $statusCode = $response->status();
 
         if ($statusCode !== 200) {
@@ -38,20 +33,23 @@ class MinecraftAuthController implements RequestHandlerInterface
         }
 
         $json = $response->json();
-        $uuid = $json['uuid'];
+
+        $id = $json['id'];
+        $username = $json['username'];
+        $avatar = $json['avatar'];
 
         $payload = [
-            'email' => $uuid.'@auth-minecraft.net',
-            'username' => $json['username'],
-            'avatar' => 'https://crafatar.com/avatars/'.$uuid
+            'id' => $id,
+            'username' => $username,
+            'avatar' => $avatar
         ];
 
         return $this->response->make(
             'minecraft',
-            $uuid,
+            $id,
             function (Registration $registration) use ($payload) {
                 $registration
-                    ->provideTrustedEmail($payload['email'])
+                    ->provideTrustedEmail($payload['username'] . '+minecraft@machine.local')
                     ->suggestUsername($payload['username'])
                     ->provideAvatar($payload['avatar'])
                     ->setPayload($payload);

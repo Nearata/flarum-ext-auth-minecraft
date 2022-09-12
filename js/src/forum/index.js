@@ -1,46 +1,41 @@
-import ChangeEmailModal from "./components/ChangeEmailModal";
 import MinecraftLogInModal from "./components/MinecraftLogInModal";
-import app from "flarum/app";
-import Button from "flarum/common/components/Button";
 import { extend } from "flarum/common/extend";
+import app from "flarum/forum/app";
 import LogInButtons from "flarum/forum/components/LogInButtons";
 import SettingsPage from "flarum/forum/components/SettingsPage";
 
 app.initializers.add("nearata-auth-minecraft", () => {
     extend(LogInButtons.prototype, "items", function (items) {
-        items.add(
-            "authMinecraft",
-            m(
-                Button,
-                {
-                    className: "Button LogInButton LogInButton--minecraft",
-                    onclick: () => app.modal.show(MinecraftLogInModal),
-                },
-                app.translator.trans(
-                    "nearata-auth-minecraft.forum.log_in_button_title"
-                )
-            )
+        const base = app.forum.attribute("baseUrl");
+
+        const button = m(
+            "button",
+            {
+                class: "Button LogInButton LogInButton--minecraft hasIcon",
+                type: "button",
+                onclick: () => app.modal.show(MinecraftLogInModal),
+            },
+            [
+                m("img", {
+                    class: "icon Button-icon",
+                    src: `${base}/assets/extensions/nearata-auth-minecraft/minecraft-icon.png`,
+                }),
+                m("span.Button-label", [
+                    app.translator.trans(
+                        "nearata-auth-minecraft.forum.log_in_button_title"
+                    ),
+                ]),
+            ]
         );
+
+        items.add("nearataAuthMinecraft", button);
     });
 
     extend(SettingsPage.prototype, "accountItems", function (items) {
         const user = this.user;
 
-        if (user.email().endsWith("auth-minecraft.net")) {
-            items.replace(
-                "changeEmail",
-                m(
-                    Button,
-                    {
-                        className: "Button",
-                        onclick: () =>
-                            app.modal.show(ChangeEmailModal, { user }),
-                    },
-                    app.translator.trans(
-                        "nearata-auth-minecraft.forum.settings.change_email_button"
-                    )
-                )
-            );
+        if (user.attribute("nearataAuthMinecraftFromServer")) {
+            items.remove("changeEmail");
         }
     });
 });

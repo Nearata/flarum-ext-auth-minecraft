@@ -2,10 +2,6 @@
 
 > A [Flarum](http://flarum.org) extension. Allow users to login with Minecraft.
 
-## Pictures
-
-[Imgur](https://imgur.com/a/UjBgv7U)
-
 ## Install
 
 ```sh

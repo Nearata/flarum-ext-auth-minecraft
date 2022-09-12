@@ -12,16 +12,14 @@ use Illuminate\Support\Arr;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * makeResponse returns JsonResponse instead of HTMLResponse
+ * @see \Flarum\Forum\Auth\ResponseFactory
+ */
 class CustomResponseFactory
 {
-    /**
-     * @var Rememberer
-     */
     protected $rememberer;
 
-    /**
-     * @param Rememberer $rememberer
-     */
     public function __construct(Rememberer $rememberer)
     {
         $this->rememberer = $rememberer;
@@ -61,7 +59,7 @@ class CustomResponseFactory
         return new JsonResponse($payload);
     }
 
-    private function makeLoggedInResponse(User $user)
+    private function makeLoggedInResponse(User $user): ResponseInterface
     {
         $response = $this->makeResponse(['loggedIn' => true]);
 
