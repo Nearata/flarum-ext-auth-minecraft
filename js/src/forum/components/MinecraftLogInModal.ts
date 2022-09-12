@@ -2,12 +2,12 @@ import Button from "flarum/common/components/Button";
 import Modal from "flarum/common/components/Modal";
 import app from "flarum/forum/app";
 
-const trans = (key, options = {}) => {
+const trans = (key: string, options = {}) => {
     return app.translator.trans(`nearata-auth-minecraft.forum.${key}`, options);
 };
 
 export default class MinecraftLogInModal extends Modal {
-    oninit(vnode) {
+    oninit(vnode: any) {
         super.oninit(vnode);
     }
 
@@ -48,7 +48,7 @@ export default class MinecraftLogInModal extends Modal {
         ];
     }
 
-    onsubmit(e) {
+    onsubmit(e: SubmitEvent) {
         e.preventDefault();
 
         this.loading = true;
@@ -58,14 +58,14 @@ export default class MinecraftLogInModal extends Modal {
             method: "POST",
             errorHandler: this.onerror.bind(this),
         })
-            .then((response) => {
+            .then((response: any) => {
                 app.authenticationComplete(response);
             })
             .catch(() => {})
             .then(this.loaded.bind(this));
     }
 
-    onerror(error) {
+    onerror(error: any) {
         if (error.status === 400) {
             error.alert.content = trans("login_error");
         }
