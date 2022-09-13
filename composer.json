@@ -10,11 +10,11 @@
     "license": "Unlicense",
     "support": {
         "issues": "https://github.com/Nearata/flarum-ext-auth-minecraft/issues",
-        "source": "https://github.com/Nearata/flarum-ext-auth-minecraft"
+        "source": "https://github.com/Nearata/flarum-ext-auth-minecraft",
+        "forum": "https://discuss.flarum.org/d/27265"
     },
     "require": {
-        "flarum/core": "^1.0.0",
-        "guzzlehttp/guzzle": "^7.4",
+        "flarum/core": "^1.0",
         "illuminate/http": "^8.0"
     },
     "authors": [
