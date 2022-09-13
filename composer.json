@@ -35,7 +35,7 @@
             "category": "feature",
             "icon": {
                 "name": "fas fa-server",
-                "backgroundColor": "#04E762",
+                "backgroundColor": "#00AA00",
                 "color": "#fff"
             }
         }
